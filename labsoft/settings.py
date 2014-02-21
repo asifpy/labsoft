@@ -88,7 +88,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-STATIC_ROOT = path('static')
+#STATIC_ROOT = path('static')
+STATICFILES_DIRS = (
+ path('static'),
+ )
 STATIC_URL = '/static/'
 
 # List of finder classes that know how to find static files in
@@ -109,6 +112,8 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
 )
+
+
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
