@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     #'django.contrib.markup',
     'django_extensions',
     
-    'labsoft.web',
+    'labsoft.core',
 
 )
 

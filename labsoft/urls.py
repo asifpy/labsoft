@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'labsoft.web.views.index', name='labsoft-index'),
+    url(r'^$', 'labsoft.core.views.index', name='labsoft-index'),
     #url(r'^$', TemplateView.as_view(template_name="index.html"), name='labsoft-index'),
     # url(r'^blog/', include('blog.urls')),
 
