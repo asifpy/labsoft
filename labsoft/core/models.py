@@ -62,7 +62,13 @@ class Equipment(Model):
     tc_chamber = CharField(max_length=20, blank=True, null=True)
 
 class EquipmentSample(Model):
-    sample_no = IntegerField()
+    def number(self):
+        no = EquipmentSample.objects.count()
+        if no == None:
+            return 1000
+        else:
+            return no + 1
+    sample_no = IntegerField(unique=True, default=number)
     equipment = ForeignKey('Equipment', blank=True,
                 null=True, related_name='samples')
     sampling_date = DateField(blank=True, null=True)
@@ -71,9 +77,48 @@ class EquipmentSample(Model):
     sampling_from = CharField(max_length=30, blank=True, null=True)
     sampling_reason = CharField(max_length=30, blank=True, null=True)
     oil_temp = CharField(max_length=30, blank=True, null=True)
-
-class Analysis(Model):
-    pass
-
+    unit_in_operation = BooleanField(default=False)
+    top_oil_temp = CharField(max_length=30, blank=True, null=True)
+    winding_temp = CharField(max_length=30, blank=True, null=True)
+    ambient_temp = CharField(max_length=30, blank=True, null=True)
+    sample_condition = CharField(max_length=20,
+                       blank=True, null=True,
+                       choices=[('good_condition', 'Good Condition'),
+                                ('follow_up', 'Follow Up'),
+                                ('take_action', 'Take Action')
+                               ])
+    sample_action = CharField(max_length=20,
+                       blank=True, null=True,
+                       choices=[('regeneration', 'Re-generation'),
+                                ('filtration', 'Filtration'),
+                                ('de_eneragized', 'De-energized'),
+                                ('el_tests', 'EL tests')
+                               ])
+    
+    ambient_humidity = CharField(max_length=30, blank=True, null=True)
+    status = CharField(max_length=20,
+                       blank=True, null=True,
+                       choices=[('not_started', 'Not Started'),
+                                ('in_progress', 'In-Progress'),
+                                ('completed', 'Completed')
+                               ])
+    analysis_status = CharField(max_length=20,
+                       blank=True, null=True,
+                       choices=[('not_started', 'Not Started'),
+                                ('in_progress', 'In-Progress'),
+                                ('completed', 'Completed')
+                               ])
+    
+    recommendation = TextField(blank=True, null=True)
+    
+class SampleAnalysis(Model):
+    sample = ForeignKey('EquipmentSample', blank=True,
+                null=True, related_name='analyses')
+    type = CharField(max_length=20,
+                     blank=True, null=True,
+                     choices=constants.ANALYSIS_TYPES)
+    evaluation = TextField(blank=True, null=True)
+    notes = TextField(blank=True, null=True)
+    
 class TestResult(Model):
     pass

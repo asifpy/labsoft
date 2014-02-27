@@ -1,3 +1,9 @@
+ANALYSIS_TYPES = [
+    ('gas_analysis', 'Gas Analysis'),
+    ('oil_analysis', 'Oil Analysis'),
+ ]
+
+
 COUNTRIES = [
     ('AF', 'Afghanistan'),
     ('AL', 'Albania'),
