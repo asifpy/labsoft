@@ -27,6 +27,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CRISPY_TEMPLATE_PACK='bootstrap3'
 
 # Application definition
 
@@ -43,6 +44,7 @@ INSTALLED_APPS = (
     #'django.contrib.flatpages',
     #'django.contrib.markup',
     'django_extensions',
+    'crispy_forms',
     
     'labsoft.core',
 

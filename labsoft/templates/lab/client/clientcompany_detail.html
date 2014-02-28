@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li><a href="{% url 'labsoft-lab-client-list' %}">Clients</a></li>
+		<li class="active">Client Detail</li>
+	</ul>
+{% endblock %}
+
+{% block main_content %}
+
+{% block actions %}
+    <a class="btn btn-info" href="{% url 'labsoft-lab-client-update' object.id %}"><i class="icon-plus-sign"></i> Update Client </a>
+{% endblock %}
+
+<div class='container'>
+	<h3>{{object.name}}</h3>
+	<table class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+			<tr>
+				<td>Name</th>
+				<td>{{object.name}}</th>
+            </tr>
+			<tr>
+				<td>ID</th>
+				<td>{{object.id}}</th>
+            </tr>
+		</tbody>
+	</table>
+	
+	<h3>Employees</h3>
+	<table class="table table-bordered table-condensed">
+		<thead>
+        	<tr>
+               	<th>Name</th>
+                <th>Mobile</th>
+                <th>Telephone</th>
+                <th>Email</th>
+				<th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+        	{% for employee in object.employees.all %}
+            <tr>
+            	<td>{{employee.name}}</td>
+                <td>{{employee.mobile}}</td>
+                <td>{{employee.telephone}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.address}}</td>
+            </tr>
+            {% endfor %}
+         </tbody>
+     </table>
+	</table>
+	
+</div>
+{% endblock %}

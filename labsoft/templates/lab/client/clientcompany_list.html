@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="/">Home</a>
+		<li class="active">Clients</li>
+	</ul>
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="/static/css/DT_bootstrap.css">
+{% endblock %}
+
+{% block main_content %}
+{% block actions %}
+    <a class="btn btn-primary" href="{% url 'labsoft-lab-client-create' %}"><i class="icon-plus-sign"></i> Add Client </a>
+{% endblock %}
+
+<div class="container">
+	<h3>Clients</h3>
+    <table class="table table-bordered table-condensed" id="sortable-table">
+		<thead>
+			<tr>
+				<th>Name</th>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody>
+			{% for object in object_list %}
+                <tr>
+                   <td><a href="{% url 'labsoft-lab-client-detail' object.id %}">{{object.name}}</a></td>
+				   <td>{{object.id}}</td>
+				</tr>
+			{% endfor %}
+         </tbody>
+
+     </table>
+</div>
+{% endblock %}

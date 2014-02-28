@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block js %}
+	<script src="/static/js/jquery.formset.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+                $('#add_employees tbody tr').formset({
+                	addText:'&nbsp;<i class="icon-plus-sign"> Add another Employee',
+                    prefix:'{{clientemployee_formset.prefix}}',
+                    deleteText: '&nbsp;<i class="icon-remove-sign"></i>',
+                    formCssClass: 'dynamic-formset1'
+                 });
+             }); 
+         </script>
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li><a href="{% url 'labsoft-lab-client-list' %}">Clients</a></li>
+		<li class="active">Create Client</li>
+	</ul>
+{% endblock %}
+
+{% block main_content %}
+
+{{ clientemployee_formset.non_form_errors }}
+
+<form class="form-horizontal" id="form-inputs" method="post" action=".">
+  {% csrf_token %}
+  
+  <button type="submit" name="submit" class="btn btn-primary" >Save & Close</button>
+  <a class="btn btn-primary" href="{% url 'labsoft-lab-client-list' %}"><i class="icon-cancel"></i> Cancel</a>
+
+  <hr/>
+
+<div class='container'>
+	<h3>{{view_type}} Client</h3>
+    {% crispy form %}
+    
+    </br>
+    <hr/>
+    <div id="title"><h4>Add Employees to Client Company</h4></div></br>
+
+    <table id="add_employees" class="table table-bordered">
+    	<thead>
+        	<tr>
+               	<th>Name</th>
+                <th>Mobile</th>
+                <th>Telephone</th>
+                <th>Email</th>
+				<th>Address</th>
+            	<th></th>
+            </tr>
+        </thead>
+        <tbody>
+        	{% for form in clientemployee_formset.forms %}
+            	{{form.id}}
+            <tr>
+            	<td>{{form.name}}</td>
+                <td>{{form.mobile}}</td>
+                <td>{{form.telephone}}</td>
+                <td>{{form.email}}</td>
+                <td>{{form.address}}</td>
+                <td>{% if form.instance.pk %}{{ form.DELETE }}{% endif %}</td>
+            </tr>
+            {% endfor %}
+         </tbody>
+     </table>
+
+{{ clientemployee_formset.management_form }}
+</div>
+</form>
+    
+</div>
+{% endblock %}
