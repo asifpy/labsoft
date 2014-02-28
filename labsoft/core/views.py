@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
 
 def index(request):
-    logout(request)
+    #logout(request)
     username = password = ''
     if request.POST:
         username = request.POST['username']

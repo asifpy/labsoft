@@ -49,19 +49,22 @@
           <a class="navbar-brand" href="#">LabSoft</a>
         </div>
 		
-        <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" action="/" method="post">
-            {% csrf_token %}
-            <div class="form-group">
-              <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
-            </div>
-            <div class="form-group">
-              <input type="password" name="password" class="form-control" placeholder="Password" required>
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-		
+		{% if user.is_authenticated %}
+          <p class="navbar-text pull-right">Logged in as <a href="/auth/logout/?next=/auth/login/">{{ user.username }}</a></p>
+		{% else %}		
+	        <div class="navbar-collapse collapse">
+	          <form class="navbar-form navbar-right" role="form" action="/" method="post">
+	            {% csrf_token %}
+	            <div class="form-group">
+	              <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+	            </div>
+	            <div class="form-group">
+	              <input type="password" name="password" class="form-control" placeholder="Password" required>
+	            </div>
+	            <button type="submit" class="btn btn-success">Sign in</button>
+	          </form>
+	        </div><!--/.navbar-collapse -->
+		{% endif %}
       </div>
     </div>
 
