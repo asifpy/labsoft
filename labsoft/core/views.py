@@ -1,10 +1,11 @@
 from django.http import *
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
 
 def index(request):
-    #logout(request)
+    logout(request)
     username = password = ''
     if request.POST:
         username = request.POST['username']
@@ -13,5 +14,5 @@ def index(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect(reverse('labsoft-lab-index'))
     return render_to_response('index.html', context_instance=RequestContext(request))
