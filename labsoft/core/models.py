@@ -25,7 +25,10 @@ class ClientEmployee(Base):
     telephone = CharField(max_length=15, blank=True, null=True)
     email = EmailField(max_length=50, blank=True, null=True)
     address = CharField(max_length=100, blank=True, null=True)
-
+    
+    def __unicode__(self):
+        return '{} - {}'.format(self.name, self.company.name)
+        
 class UserProfile(Model):
     """convenience class to relate employee to user."""
     user = OneToOneField(User, related_name='profile')

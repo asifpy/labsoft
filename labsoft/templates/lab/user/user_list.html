@@ -3,7 +3,7 @@
 {% block breadcrumb %}
 	<ul class="breadcrumb">
 		<li><a href="{% url 'labsoft-lab-index' %}">Home</a></li>
-		<li class="active">Clients</li>
+		<li class="active">Users</li>
 	</ul>
 {% endblock %}
 
@@ -13,23 +13,29 @@
 
 {% block main_content %}
 {% block actions %}
-    <a class="btn btn-primary" href="{% url 'labsoft-lab-client-create' %}"><i class="icon-plus-sign"></i> Add Client </a>
+    <a class="btn btn-primary" href="{% url 'labsoft-lab-user-create' %}"><i class="icon-plus-sign"></i> Add User </a>
 {% endblock %}
 
 <div class="container">
-	<h3>Clients</h3>
+	<h3>Users</h3>
     <table class="table table-bordered table-condensed" id="sortable-table">
 		<thead>
 			<tr>
 				<th>Name</th>
-                <th>ID</th>
+                <th>Username</th>
+                <th>Company</th>
+                <th>Mobile</th>
+                <th>Address</th>
             </tr>
         </thead>
         <tbody>
 			{% for object in object_list %}
                 <tr>
-                   <td><a href="{% url 'labsoft-lab-client-detail' object.id %}">{{object.name}}</a></td>
-				   <td>{{object.id}}</td>
+                   <td>{{object.employee.name}}</td>
+				   <td>{{object.user.username}}</td>
+				   <td>{{object.employee.company.name}}</td>
+				   <td>{{object.employee.mobile}}</td>
+				   <td>{{object.employee.address}}</td>
 				</tr>
 			{% endfor %}
          </tbody>

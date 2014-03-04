@@ -2,7 +2,7 @@
 
 {% block breadcrumb %}
 	<ul class="breadcrumb">
-		<li><a href="/">Home</a></li>
+		<li><a href="{% url 'labsoft-lab-index' %}">Home</a></li>
 		<li><a href="{% url 'labsoft-lab-client-list' %}">Clients</a></li>
 		<li><a href="{% url 'labsoft-lab-client-detail' object.id %}">{{object.name}}</a></li>
 		<li class="active">Update Client</li>

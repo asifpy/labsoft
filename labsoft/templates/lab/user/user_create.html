@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li><a href="{% url 'labsoft-lab-index' %}">Home</a></li>
+    <li><a href="{% url 'labsoft-lab-user-list' %} ">Users</a></li>
+    <li class="active">Create User</li>
+</ul>
+{% endblock %}
+
+{% block main_content %}
+<h3>Create User</h3>
+{% crispy form %}
+{% endblock %}
