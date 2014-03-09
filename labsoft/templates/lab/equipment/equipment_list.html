@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{% url 'labsoft-lab-index' %}">Home</a></li>
+		<li class="active">Equipments</li>
+	</ul>
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="/static/css/custom/django_tables2.css">
+{% endblock %}
+
+{% block main_content %}
+{% block actions %}
+    <a class="btn btn-primary" href="{% url 'labsoft-lab-equipment-create' %}"><i class="icon-plus-sign"></i> Add Equipment </a>
+{% endblock %}
+
+<div class="container">
+	<h3>Equipments</h3>
+	
+	<form class="form-inline pull-right" role="form" action="." method="GET">
+  		<div class="form-group">
+    		<input type="text" class="form-control" name="search" placeholder="Search">
+  			<button type="submit" class="btn btn-primary">Search</button>
+  		</div>
+  	</form>
+	<br/>
+	<br/>
+
+	{% render_table equipments_table %}
+
+</div>
+{% endblock %}

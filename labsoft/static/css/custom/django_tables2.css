@@ -1,0 +1,23 @@
+ul.pagination {
+    background: white url(../img/django_tables2/pagination-bg.gif) left 180% repeat-x;
+    overflow: auto;
+    margin: 0;
+    padding: 10px;
+    border: 1px solid #DDD;
+    list-style: none;
+}
+
+ul.pagination > li {
+    float: left;
+    line-height: 22px;
+    margin-left: 10px;
+}
+
+ul.pagination > li:first-child {
+    margin-left: 0;
+}
+
+ul.pagination > li.cardinality {
+    float: right;
+    color: #8d8d8d;
+}

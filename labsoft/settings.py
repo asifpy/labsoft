@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     #'django.contrib.markup',
     'django_extensions',
     'crispy_forms',
+    'django_tables2',
     
     'labsoft.core',
 
