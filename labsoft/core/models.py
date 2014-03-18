@@ -65,13 +65,7 @@ class Equipment(Model):
     tc_chamber = CharField(max_length=20, blank=True, null=True)
 
 class EquipmentSample(Model):
-    def number(self):
-        no = EquipmentSample.objects.count()
-        if no == None:
-            return 1000
-        else:
-            return no + 1
-    sample_no = IntegerField(unique=True, default=number)
+    sample_no = IntegerField(unique=True)
     equipment = ForeignKey('Equipment', blank=True,
                 null=True, related_name='samples')
     sampling_date = DateField(blank=True, null=True)

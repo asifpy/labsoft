@@ -14,6 +14,7 @@
 
 {% block actions %}
     <a class="btn btn-info" href="{% url 'labsoft-lab-equipment-update' object.id %}"><i class="icon-plus-sign"></i> Update Equipment </a>
+	<a class="btn btn-info" href="{% url 'labsoft-lab-equipment-sample-list' object.id %}"><i class="icon-task-alt"></i> Equipment Samples</a>
 {% endblock %}
 
 <div class='container'>
