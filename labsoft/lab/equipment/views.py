@@ -47,6 +47,11 @@ class EquipmentSampleCreateView(generic.CreateView):
     form_class = EquipmentSampleForm
     model = EquipmentSample
     
+    def get_form_kwargs(self):
+        kwargs = super(EquipmentSampleCreateView, self).get_form_kwargs()
+        kwargs['equipment_id'] = self.kwargs['pk']
+        return kwargs
+    
     def get_context_data(self, **kwargs):
         context = super(EquipmentSampleCreateView, self).get_context_data(**kwargs)
         context['equipment'] = Equipment.objects.get(id=self.kwargs['pk'])

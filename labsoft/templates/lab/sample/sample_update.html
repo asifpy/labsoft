@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{% url 'labsoft-lab-index' %}">Home</a></li>
+		<li><a href="{% url 'labsoft-lab-sample-list' %}">Samples</a></li>
+		<li><a href="{% url 'labsoft-lab-sample-detail' object.id %}">{{object.serial_no}}</a></li>
+		<li class="active">Update Sample</li>
+	</ul>
+{% endblock %}
+
+{% block main_content %}
+
+<div class='container'>
+	<h3>Update Sample</h3>
+    {% crispy form %}
+</div>
+
+{% endblock %}

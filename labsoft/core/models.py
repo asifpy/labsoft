@@ -63,7 +63,10 @@ class Equipment(Model):
     tc_type = CharField(max_length=20, blank=True, null=True)
     sealing_system = CharField(max_length=20, blank=True, null=True)
     tc_chamber = CharField(max_length=20, blank=True, null=True)
-
+    
+    def __unicode__(self):
+        return '{}-{}'.format(self.serial_no, self.contact_person.company.name)
+    
 class EquipmentSample(Model):
     sample_no = IntegerField(unique=True)
     equipment = ForeignKey('Equipment', blank=True,

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load tags %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{% url 'labsoft-lab-index' %}">Home</a></li>
+		<li><a href="{% url 'labsoft-lab-sample-list' %}">Samples</a></li>
+		<li class="active">{{object.sample_no}}</li>
+	</ul>
+{% endblock %}
+
+{% block main_content %}
+
+{% block actions %}
+    <a class="btn btn-info" href="{% url 'labsoft-lab-sample-update' object.id %}"><i class="icon-plus-sign"></i> Update Sample </a>
+{% endblock %}
+
+<div class='container'>
+	<h3>{{object.sample_no}}</h3>
+	<table class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+			{% for field in object|get_model_fields %}
+				<tr>
+					<td>{{field.verbose_name|undertospaced}}</td>
+					<td>{{object|get_value:field.name}}</td>
+				</tr
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}
