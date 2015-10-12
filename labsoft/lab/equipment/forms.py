@@ -8,6 +8,7 @@ from labsoft.core.models import Equipment
 class EquipmentForm(forms.ModelForm):
     class Meta:
         model = Equipment
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()

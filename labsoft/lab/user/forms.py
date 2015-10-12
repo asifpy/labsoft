@@ -3,10 +3,10 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 from django.contrib.auth.models import User
-from labsoft.core.models import ClientEmployee
+from labsoft.core.models import SampleRequestor
 
 class UserForm(forms.ModelForm):
-    employee = forms.ModelChoiceField(queryset=None)
+    requestor = forms.ModelChoiceField(queryset=None)
     
     class Meta:
         model = User
@@ -26,4 +26,4 @@ class UserForm(forms.ModelForm):
                                      css_class="col-sm-offset-2 btn-primary"))
         super(UserForm, self).__init__(*args, **kwargs)
 
-        self.fields['employee'].queryset = ClientEmployee.objects.filter(profile=None)
+        self.fields['requestor'].queryset = SampleRequestor.objects.filter(profile=None)

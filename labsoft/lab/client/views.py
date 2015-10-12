@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.forms.models import inlineformset_factory
 
-from labsoft.core.models import ClientCompany, ClientEmployee
+from labsoft.core.models import ClientCompany, SampleRequestor
 from labsoft.lab.client.forms import ClientCompanyForm
 
 class ClientCompanyListView(generic.ListView):
@@ -22,7 +22,12 @@ class ClientCompanyCreateView(generic.CreateView):
     
     def get_context_data(self, **kwargs):
         context = super(ClientCompanyCreateView, self).get_context_data(**kwargs)
-        ClientEmployeeFormSet = inlineformset_factory(ClientCompany, ClientEmployee, extra=2)
+        ClientEmployeeFormSet = inlineformset_factory(
+            ClientCompany,
+            SampleRequestor,
+            extra=2,
+            exclude=('company',))
+        
         if self.request.POST:
             context['clientemployee_formset'] = ClientEmployeeFormSet(self.request.POST)
         else:
@@ -41,8 +46,7 @@ class ClientCompanyCreateView(generic.CreateView):
             return HttpResponseRedirect(reverse('labsoft-lab-client-list'))
         else:
             return self.render_to_response(self.get_context_data(form=form))
-    
-    
+
 class ClientCompanyUpdateView(generic.UpdateView):
     template_name = 'lab/client/clientcompany_update.html'
     form_class = ClientCompanyForm
@@ -52,7 +56,11 @@ class ClientCompanyUpdateView(generic.UpdateView):
     
     def get_context_data(self, **kwargs):
         context = super(ClientCompanyUpdateView, self).get_context_data(**kwargs)
-        ClientEmployeeFormSet = inlineformset_factory(ClientCompany, ClientEmployee, extra=2, can_delete=True)
+        ClientEmployeeFormSet = inlineformset_factory(
+                ClientCompany, 
+                SampleRequestor,
+                exclude=('company',),
+                extra=2, can_delete=True)
         
         if self.request.POST:
             context['clientemployee_formset'] = ClientEmployeeFormSet(
@@ -78,7 +86,6 @@ class ClientCompanyUpdateView(generic.UpdateView):
             return HttpResponseRedirect(reverse('labsoft-lab-client-list'))
         else:
             return self.render_to_response(self.get_context_data(form=form))
-    
 
 class ClientCompanyDetailView(generic.DetailView):
     template_name = 'lab/client/clientcompany_detail.html'

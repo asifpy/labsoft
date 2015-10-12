@@ -17,7 +17,7 @@ class ClientCompany(Base):
     "Represents client company"
     pass
 
-class ClientEmployee(Base):
+class SampleRequestor(Base):
     "Information about Employee of Client Company"
     company = ForeignKey('ClientCompany', blank=True,
               null=True, related_name='employees')
@@ -32,24 +32,34 @@ class ClientEmployee(Base):
 class UserProfile(Model):
     """convenience class to relate employee to user."""
     user = OneToOneField(User, related_name='profile')
-    employee = OneToOneField('ClientEmployee', related_name='profile')
+    requestor = OneToOneField('SampleRequestor', related_name='profile')
 
 class EquipmentType(Base):
     "Actual equipment, eg: Transformer, Generator"
     pass
 
 class Equipment(Model):
-    serial_no = CharField(max_length=20, blank=True, null=True, unique=True)
+    serial_no = CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        unique=True
+    )
     id_no = CharField(max_length=20, blank=True, null=True)
     manufacturer_name = CharField(max_length=20, blank=True, null=True)
-    manufacturer_country = CharField(max_length=20,
-                           blank=True, null=True,
-                           choices=constants.COUNTRIES)
+    manufacturer_country = CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        choices=constants.COUNTRIES
+    )
     manufacturer_year = IntegerField(blank=True, null=True)
-    equipment_type = ForeignKey('EquipmentType', blank=True,
-                     null=True, related_name='equipments')
-    contact_person = ForeignKey('ClientEmployee', blank=True,
-                     null=True, related_name='equipments')
+    equipment_type = ForeignKey(
+        'EquipmentType',
+        blank=True,
+        null=True,
+        related_name='equipments'
+        )
     station_name = CharField(max_length=20, blank=True, null=True)
     location = CharField(max_length=20, blank=True, null=True)
     operated_power_rate = CharField(max_length=20, blank=True, null=True)
@@ -65,12 +75,22 @@ class Equipment(Model):
     tc_chamber = CharField(max_length=20, blank=True, null=True)
     
     def __unicode__(self):
-        return '{}-{}'.format(self.serial_no, self.contact_person.company.name)
+        return '{}-{}'.format(self.serial_no, self.equipment_type)
     
 class EquipmentSample(Model):
     sample_no = IntegerField(unique=True)
-    equipment = ForeignKey('Equipment', blank=True,
-                null=True, related_name='samples')
+    equipment = ForeignKey(
+        'Equipment',
+        blank=True,
+        null=True,
+        related_name='samples'
+    )
+    requestor = ForeignKey(
+        'SampleRequestor',
+        blank=True,
+        null=True,
+        related_name='equipments'
+    )
     sampling_date = DateField(blank=True, null=True)
     arrival_date = DateField(blank=True, null=True)
     report_date = DateField(blank=True, null=True)
@@ -81,33 +101,43 @@ class EquipmentSample(Model):
     top_oil_temp = CharField(max_length=30, blank=True, null=True)
     winding_temp = CharField(max_length=30, blank=True, null=True)
     ambient_temp = CharField(max_length=30, blank=True, null=True)
-    sample_condition = CharField(max_length=20,
-                       blank=True, null=True,
-                       choices=[('good_condition', 'Good Condition'),
-                                ('follow_up', 'Follow Up'),
-                                ('take_action', 'Take Action')
-                               ])
+    sample_condition = CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        choices=[
+            ('good_condition', 'Good Condition'),
+            ('follow_up', 'Follow Up'),
+            ('take_action', 'Take Action')
+            ])
     sample_action = CharField(max_length=20,
-                       blank=True, null=True,
-                       choices=[('regeneration', 'Re-generation'),
-                                ('filtration', 'Filtration'),
-                                ('de_eneragized', 'De-energized'),
-                                ('el_tests', 'EL tests')
-                               ])
+        blank=True,
+        null=True,
+        choices=[
+            ('regeneration', 'Re-generation'),
+            ('filtration', 'Filtration'),
+            ('de_eneragized', 'De-energized'),
+            ('el_tests', 'EL tests')
+            ])
     
     ambient_humidity = CharField(max_length=30, blank=True, null=True)
-    status = CharField(max_length=20,
-                       blank=True, null=True,
-                       choices=[('not_started', 'Not Started'),
-                                ('in_progress', 'In-Progress'),
-                                ('completed', 'Completed')
-                               ])
-    analysis_status = CharField(max_length=20,
-                       blank=True, null=True,
-                       choices=[('not_started', 'Not Started'),
-                                ('in_progress', 'In-Progress'),
-                                ('completed', 'Completed')
-                               ])
+    status = CharField(
+        max_length=20,
+        blank=True, null=True,
+        choices=[
+            ('not_started', 'Not Started'),
+            ('in_progress', 'In-Progress'),
+            ('completed', 'Completed')
+            ])
+    
+    analysis_status = CharField(
+        max_length=20,
+        blank=True, null=True,
+        choices=[
+            ('not_started', 'Not Started'),
+            ('in_progress', 'In-Progress'),
+            ('completed', 'Completed')
+            ])
     
     recommendation = TextField(blank=True, null=True)
     

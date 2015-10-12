@@ -2,10 +2,10 @@
 Django settings for labsoft project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
+https://docs.djangoproject.com/en/1.8/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
+https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'crispy_forms',
     'django_tables2',
+    'bootstrap3',
     
     'labsoft.core',
 

@@ -8,6 +8,7 @@ from labsoft.core.models import ClientCompany
 class ClientCompanyForm(forms.ModelForm):
     class Meta:
         model = ClientCompany
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
