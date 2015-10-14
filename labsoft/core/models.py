@@ -2,43 +2,45 @@ from django.db.models import *
 from django.contrib.auth.models import User
 
 from labsoft.core import constants
+from labsoft.core.abstract import(
+    Base,
+    Auditable,
+    AuditCreator
+)
 
-class Base(Model):
-    "Abstract class to  use the name field in other models"
-    name = CharField(max_length=100, blank=True, null=True)
 
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        abstract=True
-
-class ClientCompany(Base):
+class ClientCompany(Base, AuditCreator):
     "Represents client company"
     pass
 
-class SampleRequestor(Base):
+
+class SampleRequestor(Base, AuditCreator):
     "Information about Employee of Client Company"
-    company = ForeignKey('ClientCompany', blank=True,
-              null=True, related_name='employees')
+    company = ForeignKey(
+        'ClientCompany',
+        blank=True,
+        null=True,
+        related_name='employees'
+    )
     mobile = CharField(max_length=15, blank=True, null=True)
     telephone = CharField(max_length=15, blank=True, null=True)
     email = EmailField(max_length=50, blank=True, null=True)
     address = CharField(max_length=100, blank=True, null=True)
-    
+
     def __unicode__(self):
         return '{} - {}'.format(self.name, self.company.name)
-        
+
+
 class UserProfile(Model):
     """convenience class to relate employee to user."""
     user = OneToOneField(User, related_name='profile')
     requestor = OneToOneField('SampleRequestor', related_name='profile')
 
-class EquipmentType(Base):
+class EquipmentType(Base, AuditCreator):
     "Actual equipment, eg: Transformer, Generator"
     pass
 
-class Equipment(Model):
+class Equipment(AuditCreator):
     serial_no = CharField(
         max_length=20,
         blank=True,
@@ -54,6 +56,12 @@ class Equipment(Model):
         choices=constants.COUNTRIES
     )
     manufacturer_year = IntegerField(blank=True, null=True)
+    company = ForeignKey(
+        'ClientCompany',
+        blank=True,
+        null=True,
+        related_name='equipments'
+    )
     equipment_type = ForeignKey(
         'EquipmentType',
         blank=True,
@@ -77,7 +85,7 @@ class Equipment(Model):
     def __unicode__(self):
         return '{}-{}'.format(self.serial_no, self.equipment_type)
     
-class EquipmentSample(Model):
+class EquipmentSample(Auditable):
     sample_no = IntegerField(unique=True)
     equipment = ForeignKey(
         'Equipment',
@@ -141,14 +149,69 @@ class EquipmentSample(Model):
     
     recommendation = TextField(blank=True, null=True)
     
-class SampleAnalysis(Model):
-    sample = ForeignKey('EquipmentSample', blank=True,
-                null=True, related_name='analyses')
-    type = CharField(max_length=20,
-                     blank=True, null=True,
-                     choices=constants.ANALYSIS_TYPES)
+class SampleAnalysis(AuditCreator):
+    sample = ForeignKey(
+        'EquipmentSample',
+        blank=True,
+        null=True,
+        related_name='analyses')
+    type = CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        choices=constants.ANALYSIS_TYPES
+    )
     evaluation = TextField(blank=True, null=True)
     notes = TextField(blank=True, null=True)
+
+class AnalysisTestData(AuditCreator):
+    type = CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        choices=constants.ANALYSIS_TYPES
+    )
+    testname = CharField(
+        max_length=50,
+        blank=True,
+        null=True
+        )
+
+class TestDataSpecification(AuditCreator):
+    sample = ForeignKey(
+        'EquipmentSample',
+        blank=True,
+        null=True,
+        related_name='specifications')
+    testdata = ForeignKey(
+        'AnalysisTestData',
+        blank=True,
+        null=True,
+        related_name='specifications'
+        )
     
-class TestResult(Model):
-    pass
+    normal_limit = FloatField()
+    caution_limit = FloatField()
+
+class AnalysisTestResult(AuditCreator):
+    analysis = ForeignKey(
+        'SampleAnalysis',
+        blank=True,
+        null=True,
+        related_name='testresults')
+    
+    testdata = ForeignKey(
+        'AnalysisTestData',
+        blank=True,
+        null=True,
+        related_name='testresults'
+        )
+    
+    spec = ForeignKey(
+        'TestDataSpecification',
+        blank=True,
+        null=True,
+        related_name='testresults'
+        )
+    
+    result_value = FloatField()

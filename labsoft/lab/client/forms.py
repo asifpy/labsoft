@@ -3,12 +3,12 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 from labsoft.core.models import ClientCompany
-
+from labsoft.core.helpers import common_form_excludes
 
 class ClientCompanyForm(forms.ModelForm):
     class Meta:
         model = ClientCompany
-        fields = '__all__'
+        exclude = common_form_excludes()
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()

@@ -3,7 +3,6 @@ ANALYSIS_TYPES = [
     ('oil_analysis', 'Oil Analysis'),
  ]
 
-
 COUNTRIES = [
     ('AF', 'Afghanistan'),
     ('AL', 'Albania'),

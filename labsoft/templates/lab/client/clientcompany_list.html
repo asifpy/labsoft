@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load render_table from django_tables2 %}
 
 {% block breadcrumb %}
 	<ul class="breadcrumb">
@@ -18,22 +19,16 @@
 
 <div class="container">
 	<h3>Clients</h3>
-    <table class="table table-bordered table-condensed" id="sortable-table">
-		<thead>
-			<tr>
-				<th>Name</th>
-                <th>ID</th>
-            </tr>
-        </thead>
-        <tbody>
-			{% for object in object_list %}
-                <tr>
-                   <td><a href="{% url 'labsoft-lab-client-detail' object.id %}">{{object.name}}</a></td>
-				   <td>{{object.id}}</td>
-				</tr>
-			{% endfor %}
-         </tbody>
-
-     </table>
+    
+    <form class="form-inline pull-right" role="form" action="." method="GET">
+        <div class="form-group">
+            <input type="text" class="form-control" name="search" placeholder="Search">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    <br/>
+    <br/>
+    
+    {% render_table company_table "widgets/tables/tables.html" %}	
 </div>
 {% endblock %}

@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'django_tables2',
     'bootstrap3',
+    'autocomplete_light',
     
     'labsoft.core',
 

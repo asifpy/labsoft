@@ -14,11 +14,11 @@
 
 {% block main_content %}
 {% block actions %}
-    <a class="btn btn-primary" href="{% url 'labsoft-lab-equipment-sample-create' equipment.id %}"><i class="icon-plus-sign"></i> Add Sample </a>
+    <a class="btn btn-primary" href="{% url 'labsoft-lab-equipment-sample-create' equipment.id %}"><i class="icon-plus-sign"></i> Add Sample for {{equipment.serial_no}}</a>
 {% endblock %}
 
 <div class="container">
-	<h3>Samples</h3>
+	<h3>Samples for {{equipment}}</h3>
 	
 	<form class="form-inline pull-right" role="form" action="." method="GET">
   		<div class="form-group">
