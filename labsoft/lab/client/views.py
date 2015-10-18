@@ -40,6 +40,7 @@ class ClientCompanyCreateView(generic.CreateView):
         context = super(
             ClientCompanyCreateView, self
             ).get_context_data(**kwargs)
+        
         ClientEmployeeFormSet = inlineformset_factory(
             ClientCompany,
             SampleRequestor,

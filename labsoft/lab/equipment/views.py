@@ -83,6 +83,7 @@ class EquipmentSampleCreateView(generic.CreateView):
         else:
             self.object.sample_no = 1000 + no_samples
         self.object.save()
+        make_preparation(self.object, self.request.user)
         return HttpResponseRedirect(reverse('labsoft-lab-equipment-detail', args=[self.kwargs['pk']]))
 
 

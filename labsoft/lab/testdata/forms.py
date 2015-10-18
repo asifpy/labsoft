@@ -1,16 +1,15 @@
+from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-import autocomplete_light.shortcuts as autocomplete_light
 
-from labsoft.core.models import EquipmentSample
+from labsoft.core.models import AnalysisTestData
 from labsoft.core.helpers import common_form_excludes
 
 
-class EquipmentSampleForm(autocomplete_light.ModelForm):
+class TestDataForm(forms.ModelForm):
     class Meta:
-        model = EquipmentSample
-        exclude = ['sample_no'] + common_form_excludes(approval_fields=True)
-        autocomplete_fields = ['equipment', 'requestor']
+        model = AnalysisTestData
+        exclude = common_form_excludes()
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
@@ -22,6 +21,4 @@ class EquipmentSampleForm(autocomplete_light.ModelForm):
         self.helper.field_class = 'col-sm-3'
         self.helper.add_input(Submit('submit', 'Submit',
                                      css_class="col-sm-offset-2 btn-primary"))
-        super(EquipmentSampleForm, self).__init__(*args, **kwargs)
-        if self.equipment_id:
-            self.fields.pop('equipment')
+        super(TestDataForm, self).__init__(*args, **kwargs)

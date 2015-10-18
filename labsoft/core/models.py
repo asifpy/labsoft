@@ -36,9 +36,11 @@ class UserProfile(Model):
     user = OneToOneField(User, related_name='profile')
     requestor = OneToOneField('SampleRequestor', related_name='profile')
 
+
 class EquipmentType(Base, AuditCreator):
     "Actual equipment, eg: Transformer, Generator"
     pass
+
 
 class Equipment(AuditCreator):
     serial_no = CharField(
@@ -81,10 +83,11 @@ class Equipment(AuditCreator):
     tc_type = CharField(max_length=20, blank=True, null=True)
     sealing_system = CharField(max_length=20, blank=True, null=True)
     tc_chamber = CharField(max_length=20, blank=True, null=True)
-    
+
     def __unicode__(self):
         return '{}-{}'.format(self.serial_no, self.equipment_type)
-    
+
+
 class EquipmentSample(Auditable):
     sample_no = IntegerField(unique=True)
     equipment = ForeignKey(
@@ -118,7 +121,8 @@ class EquipmentSample(Auditable):
             ('follow_up', 'Follow Up'),
             ('take_action', 'Take Action')
             ])
-    sample_action = CharField(max_length=20,
+    sample_action = CharField(
+        max_length=20,
         blank=True,
         null=True,
         choices=[
@@ -127,7 +131,7 @@ class EquipmentSample(Auditable):
             ('de_eneragized', 'De-energized'),
             ('el_tests', 'EL tests')
             ])
-    
+
     ambient_humidity = CharField(max_length=30, blank=True, null=True)
     status = CharField(
         max_length=20,
@@ -137,7 +141,7 @@ class EquipmentSample(Auditable):
             ('in_progress', 'In-Progress'),
             ('completed', 'Completed')
             ])
-    
+
     analysis_status = CharField(
         max_length=20,
         blank=True, null=True,
@@ -146,9 +150,10 @@ class EquipmentSample(Auditable):
             ('in_progress', 'In-Progress'),
             ('completed', 'Completed')
             ])
-    
+
     recommendation = TextField(blank=True, null=True)
-    
+
+
 class SampleAnalysis(AuditCreator):
     sample = ForeignKey(
         'EquipmentSample',
@@ -164,6 +169,7 @@ class SampleAnalysis(AuditCreator):
     evaluation = TextField(blank=True, null=True)
     notes = TextField(blank=True, null=True)
 
+
 class AnalysisTestData(AuditCreator):
     type = CharField(
         max_length=20,
@@ -177,6 +183,7 @@ class AnalysisTestData(AuditCreator):
         null=True
         )
 
+
 class TestDataSpecification(AuditCreator):
     sample = ForeignKey(
         'EquipmentSample',
@@ -189,9 +196,10 @@ class TestDataSpecification(AuditCreator):
         null=True,
         related_name='specifications'
         )
-    
+
     normal_limit = FloatField()
     caution_limit = FloatField()
+
 
 class AnalysisTestResult(AuditCreator):
     analysis = ForeignKey(
@@ -199,19 +207,19 @@ class AnalysisTestResult(AuditCreator):
         blank=True,
         null=True,
         related_name='testresults')
-    
+
     testdata = ForeignKey(
         'AnalysisTestData',
         blank=True,
         null=True,
         related_name='testresults'
         )
-    
+
     spec = ForeignKey(
         'TestDataSpecification',
         blank=True,
         null=True,
         related_name='testresults'
         )
-    
+
     result_value = FloatField()

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Base(models.Model):
     "Abstract class to  use the name field in other models"
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -9,20 +10,29 @@ class Base(models.Model):
         return self.name
 
     class Meta:
-        abstract=True
+        abstract = True
+
 
 class AuditCreator(models.Model):
-    is_prepared = models.BooleanField(default=False)
-    prepared_by = models.ForeignKey(
+    is_created = models.BooleanField(default=False)
+    created_by = models.ForeignKey(
         User,
         blank=True,
         null=True,
         related_name='+'
     )
-    prepared_on = models.DateTimeField(null=True, blank=True)
-    
+    created_at = models.DateTimeField(null=True, blank=True, auto_now_add=True)
+    updated_by = models.ForeignKey(
+        User,
+        blank=True,
+        null=True,
+        related_name='+'
+    )
+    updated_at = models.DateTimeField(null=True, blank=True, auto_now=True)
+
     class Meta:
-        abstract=True
+        abstract = True
+
 
 class Auditable(models.Model):
     """Abstract auditable model"""
