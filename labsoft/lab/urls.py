@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^users/', include('labsoft.lab.user.urls')),
     url(r'^equipments/', include('labsoft.lab.equipment.urls')),
     url(r'^samples/', include('labsoft.lab.sample.urls')),
+    url(r'^testdata/', include('labsoft.lab.testdata.urls')),
 )

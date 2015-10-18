@@ -13,7 +13,6 @@ class TestDataForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
-        self.equipment_id = kwargs.pop('equipment_id', None)
         self.helper.form_method = 'post'
         self.helper.form_tag = True
         self.helper.form_class = 'form-horizontal'
